@@ -1,0 +1,33 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.spotify.flume</groupId>
+	<artifactId>syslog-source2</artifactId>
+	<version>1.0</version>
+
+	<repositories>
+		<repository>
+			<id>com.cloudera.repository.releases</id>
+			<url>https://repository.cloudera.com/content/repositories/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.cloudera</groupId>
+			<artifactId>flume-core</artifactId>
+			<version>0.9.4-cdh3u1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
