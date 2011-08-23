@@ -20,7 +20,13 @@ public class SyslogDatagramSocketSource extends BaseSource {
 	private SocketAddress addr;
 	private DatagramSocket socket;
 	private int bufferSize;
-	
+
+	/**
+	 * Construct a new source.
+	 *
+	 * @param addr the address to bind to.
+	 * @param bufferSize the maximum number of bytes per UDP message.
+	**/
 	public SyslogDatagramSocketSource(SocketAddress addr, int bufferSize) {
 		this.addr = addr;
 		this.bufferSize = bufferSize;
@@ -31,10 +37,11 @@ public class SyslogDatagramSocketSource extends BaseSource {
 		socket = createDatagramSocket();
 	}
 
+	/**
+	 * Create a new datagram socket suitable for receiving packets on.
+	**/
 	protected DatagramSocket createDatagramSocket() throws IOException {
-		DatagramSocket s = new DatagramSocket(addr);
-		
-		return s;
+		return new DatagramSocket(addr);
 	}
 	
 	@Override
@@ -43,6 +50,8 @@ public class SyslogDatagramSocketSource extends BaseSource {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 		for (;;) {
+			// IOExceptions from here should not be counted as
+			// rejected.
 			socket.receive(packet);
 			
 			try {
