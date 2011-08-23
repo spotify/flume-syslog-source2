@@ -32,9 +32,7 @@ public class SyslogDatagramSocketSource extends BaseSource {
 	}
 
 	protected DatagramSocket createDatagramSocket() throws IOException {
-		DatagramSocket s = new DatagramSocket();
-		
-		s.connect(addr);
+		DatagramSocket s = new DatagramSocket(addr);
 		
 		return s;
 	}
@@ -45,6 +43,8 @@ public class SyslogDatagramSocketSource extends BaseSource {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 		for (;;) {
+			socket.receive(packet);
+			
 			try {
 				Event e = new SyslogParser(new ByteArrayInputStream(packet.getData(), packet.getOffset(), packet.getLength())).readEvent();
 				
