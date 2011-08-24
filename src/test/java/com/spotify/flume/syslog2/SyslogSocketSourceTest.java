@@ -12,8 +12,13 @@ import org.testng.annotations.*;
 import static org.testng.AssertJUnit.*;
 
 
+/**
+ * Given the SyslogSocketSource class is so simple, this is mostly a test of
+ * the ServerSocketSource class.
+**/
 public class SyslogSocketSourceTest {
-	final public static int PORT = 43858;
+	/// A very random ephemeral port number...
+	final public static int PORT = 53858;
 	
 	@Test
 	public void testCreate() throws Exception {
