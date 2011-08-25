@@ -76,4 +76,26 @@ public class SyslogSocketSourceTest {
 
 		assertEquals(null, s.next());
 	}
+	
+	@Test
+	public void testRecover() throws Exception {
+		SyslogSocketSource s = new SyslogSocketSource(new InetSocketAddress("localhost", PORT));
+		// Invalid date
+		String data = "<11>2011-AA-05T12:23:34.567Z hostname tag: hello world\n<11>2011-10-05T12:23:34.567Z hostname tag: hello world";
+		byte[] bytes = data.getBytes("UTF-8");
+		
+		s.open();
+
+		try {
+			Socket sender = new Socket("localhost", PORT);
+			PrintStream ps = new PrintStream(sender.getOutputStream());
+
+			ps.println(data);
+			ps.flush();
+			sender.close();
+			assertTrue(s.next() instanceof Event);
+		} finally {
+			s.close();
+		}
+	}
 }

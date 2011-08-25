@@ -176,7 +176,14 @@ public abstract class ServerSocketSource extends BaseSource {
 				
 				try {
 					for (;;) {
-						Event e = source.next();
+						Event e;
+
+						try {
+							e = source.next();
+						} catch (Exception ex) {
+							addRejectedMessages(source.recover());
+							continue;
+						}
 
 						// EOF is fine if we are not opened.
 						if (e == null || !opened)
@@ -205,7 +212,26 @@ public abstract class ServerSocketSource extends BaseSource {
 	 * @see com.cloudera.flume.core.EventSource
 	**/
 	public static interface SocketSource {
+		/**
+		 * Close the socket and free any resources used by this source.
+		 *
+		 * Calls to any method after close() yields undefined behaviour.
+		**/
 		public void close() throws IOException, InterruptedException;
+		
+		/**
+		 * Return the next event, waiting if necessary.
+		**/
 		public Event next() throws IOException, InterruptedException;
+		
+		/**
+		 * Attempt to recover from a failure.
+		 *
+		 * This will be called if next() throws an exception. If this
+		 * method throws an exception, the socket will be closed.
+		 *
+		 * @return the number of rejected/skipped messages.
+		**/
+		public int recover() throws IOException, InterruptedException;
 	}
 }

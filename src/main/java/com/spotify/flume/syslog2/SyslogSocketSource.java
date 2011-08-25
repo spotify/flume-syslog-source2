@@ -41,5 +41,12 @@ public class SyslogSocketSource extends ServerSocketSource {
 		public Event next() throws IOException, InterruptedException {
 			return parser.readEvent();
 		}
+
+		@Override
+		public int recover() throws IOException, InterruptedException {
+			parser.skipLine();
+
+			return 1;
+		}
 	}
 }
