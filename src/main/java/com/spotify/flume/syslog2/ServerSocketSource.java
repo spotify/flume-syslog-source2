@@ -54,7 +54,7 @@ public abstract class ServerSocketSource extends BaseSource {
 		accepting = true;
 		socket = createServerSocket(addr, backlog);
 
-		acceptorThread = new Thread("syslog2-acceptor-" + addr) {
+		acceptorThread = new Thread("socket-acceptor-" + addr) {
 			public void run() {
 				processServerSocket();
 			}
