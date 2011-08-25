@@ -29,12 +29,13 @@ public class SyslogParserTest {
 
 	@Test
 	public void testSkipLine() throws Exception {
-		InputStream in = toInputStream("a\nb\r\nc");
+		InputStream in = toInputStream("<11>2011-10-05 12:23:34Z hostname tag: hello world 1\n<11>2011-10-05 12:23:34Z hostname tag: hello world 2\r\n<11>2011-10-05 12:23:34Z hostname tag: hello world 3");
 		SyslogParser p = new SyslogParser(in, true, ENCODING);
 
 		p.skipLine();
+		assertTrue(p.readEvent() instanceof Event);
 		p.skipLine();
-		p.skipLine();
+		assertEquals(null, p.readEvent());
 	}
 
 	@Test(dataProvider = "messages")

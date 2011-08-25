@@ -267,8 +267,6 @@ public class SyslogParser implements Closeable {
 		do {
 			c = read(false);
 		} while (c != '\n' && c != -1);
-		
-		if (c != -1) unread(c);
 	}
 
 	/**
