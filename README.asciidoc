@@ -6,7 +6,8 @@ Tommie Gannert <tommie@spotify.com>
 
 This project defines a plugin for Flume containing an improved Syslog source.
 
-It parses RFC 3164 (BSD Syslog) as well as the newer RFC 5424 (Syslog.)
+It parses http://tools.ietf.org/rfc/rfc3164.txt[RFC 3164] (BSD Syslog)
+as well as the newer http://tools.ietf.org/rfc/rfc5424.txt[RFC 5424] (Syslog.)
 The source goes to a greater length to create a Flume event than the built-in
 version. All fields possible are parsed, and the body is just the body of
 the message. Even the Tag and PID fields are parsed. This should leave clean
