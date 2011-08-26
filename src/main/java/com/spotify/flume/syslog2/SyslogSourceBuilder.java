@@ -28,7 +28,8 @@ import com.cloudera.util.Pair;
 /**
  * Create a new syslog source.
  *
- * This builder handles both streaming and datagram sockets.
+ * This factory handles both streaming and datagram sockets. Upstream calls it
+ * a builder, so let's stick with that name.
  *
  * Create a socket using one of the following forms:
  *
