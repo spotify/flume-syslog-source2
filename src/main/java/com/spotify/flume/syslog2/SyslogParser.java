@@ -51,7 +51,7 @@ import com.cloudera.flume.core.EventImpl;
  *
  * XXX: We need push backs, and this is implemented here for now. Maybe inherit
  *      PushbackInputStream instead?
-**/
+ */
 public class SyslogParser implements Closeable {
 	// These two are compatible with flume.handlers.syslog.SyslogConsts
 	final public static String SYSLOG_FACILITY = "syslogfacility";
@@ -79,7 +79,7 @@ public class SyslogParser implements Closeable {
 	 * Construct a new Syslog protocol parser.
 	 *
 	 * Tags are parsed, and the encoding is assumed to be UTF-8.
-	**/
+	 */
 	public SyslogParser(InputStream in) {
 		this(in, true, "UTF-8");
 	}
@@ -93,7 +93,7 @@ public class SyslogParser implements Closeable {
 	 *                 part of the message body.
 	 * @param encoding the encoding to use for various string conversions,
 	 *                 most notably the hostname.
-	**/
+	 */
 	public SyslogParser(InputStream in, boolean parseTag, String encoding) {
 		this.in = in;
 		this.parseTag = parseTag;
@@ -105,7 +105,7 @@ public class SyslogParser implements Closeable {
 	 *
 	 * Note that the parser cannot be reused. Closes the underlying input
 	 * stream.
-	**/
+	 */
 	public void close() throws IOException {
 		in.close();
 	}
@@ -117,7 +117,7 @@ public class SyslogParser implements Closeable {
 	 * @throw EOFException if EOF is found in an inappropriate place.
 	 * @throw IOException if the underlying stream fails, or unexpected
 	 *                    bytes are seen.
-	**/
+	 */
 	public Event readEvent() throws IOException {
 		int priority = 0;
 		int c = read(false);
@@ -275,7 +275,7 @@ public class SyslogParser implements Closeable {
 	 * The line is terminated by NL. EOF is silently ignored.
 	 *
 	 * Useful if a parsing failure has occurred and you want to skip the message.
-	**/
+	 */
 	public void skipLine() throws IOException {
 		int c;
 		
@@ -296,7 +296,7 @@ public class SyslogParser implements Closeable {
 	 * @param msgId the RFC 5424 msg-id
 	 * @param structuredData the RFC 5424 structured-data
 	 * @param body the message body
-	**/
+	 */
 	private Event createEvent(int version, int priority, Calendar date, String hostname, byte[] appname, byte[] procId, byte[] msgId, byte[] structuredData, byte[] body) {
 		Map<String, byte[]> fields = new HashMap<String, byte[]>();
 		byte[] facility = { (byte) (priority / 8) };
@@ -324,7 +324,7 @@ public class SyslogParser implements Closeable {
 	 * Resolve the given syslog priority as a Flume priority.
 	 *
 	 * This works like the mapping in flume.handlers.syslog.SyslogConsts.
-	**/
+	 */
 	private Event.Priority getEventPriorityBySyslog(int priority) {
 		switch (priority % 8) {
 		case 0:
@@ -345,7 +345,7 @@ public class SyslogParser implements Closeable {
 	 * Read a month value as an English abbreviation.
 	 *
 	 * @see RFC 3164, Sec. 4.1.2.
-	**/
+	 */
 	private int readMonthAbbreviation() throws IOException {
 		int c;
 		
@@ -430,7 +430,7 @@ public class SyslogParser implements Closeable {
 	 * Read a byte and assert the value.
 	 *
 	 * @throw IOException if the character was unexpected
-	**/	
+	 */	
 	private void expect(int c) throws IOException {
 		int d = read(true);
 
@@ -440,7 +440,7 @@ public class SyslogParser implements Closeable {
 	
 	/**
 	 * Read until a non-whitespace ASCII byte is seen.
-	**/
+	 */
 	private void skipSpaces() throws IOException {
 		int c;
 		
@@ -454,7 +454,7 @@ public class SyslogParser implements Closeable {
 	 * Read the next byte, but then unread it again.
 	 *
 	 * @param checkEof true to throw EOFException on EOF, false to return -1.
-	**/
+	 */
 	private int peek(boolean checkEof) throws IOException {
 		int c = read(checkEof);
 		
@@ -468,7 +468,7 @@ public class SyslogParser implements Closeable {
 	 *
 	 * @param checkEof true to throw EOFException on EOF, false to return -1.
 	 * @return the byte, or -1 on EOF.
-	**/
+	 */
 	private int read(boolean checkEof) throws IOException {
 		if (pushBack != -1) {
 			int c = pushBack;
@@ -488,7 +488,7 @@ public class SyslogParser implements Closeable {
 	 * Push back a character.
 	 *
 	 * Only a single character can be pushed back simultaneously.
-	**/
+	 */
 	private void unread(int c) {
 		assert c != -1 : "Trying to push back EOF";
 		assert pushBack == -1 : "Trying to push back two bytes";
@@ -499,7 +499,7 @@ public class SyslogParser implements Closeable {
 	 * Read a positive integer and convert it from decimal text form.
 	 *
 	 * EOF silently terminates the number.
-	**/
+	 */
 	private int readInt() throws IOException {
 		int c;
 		int ret = 0;
@@ -516,7 +516,7 @@ public class SyslogParser implements Closeable {
 	 * Read fractions (digits after a decimal point.)
 	 *
 	 * @return a value in the range [0, 1).
-	**/
+	 */
 	private double readFractions() throws IOException {
 		int c;
 		int ret = 0;
@@ -536,7 +536,7 @@ public class SyslogParser implements Closeable {
 	 * Read until EOF or a space.
 	 *
 	 * The input is discarded.
-	**/
+	 */
 	private void skipWord() throws IOException {
 		int c;
 		
@@ -551,7 +551,7 @@ public class SyslogParser implements Closeable {
 	 * Read a word into the given output stream.
 	 *
 	 * Usually the output stream will be a ByteArrayOutputStream.
-	**/
+	 */
 	private void readWord(OutputStream out) throws IOException {
 		int c;
 
@@ -568,7 +568,7 @@ public class SyslogParser implements Closeable {
 	 *
 	 * @param sizeHint an guess on how large string will be, in bytes.
 	 * @return a valid, but perhaps empty, word.
-	**/
+	 */
 	private String readWordString(int sizeHint) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream(sizeHint);
 		readWord(out);
@@ -581,7 +581,7 @@ public class SyslogParser implements Closeable {
 	 *
 	 * @param sizeHint an guess on how large string will be, in bytes.
 	 * @return a valid, but perhaps empty, word.
-	**/
+	 */
 	private byte[] readWord(int sizeHint) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream(sizeHint);
 		readWord(out);
@@ -595,7 +595,7 @@ public class SyslogParser implements Closeable {
 	 * If the complete word is "-", return null.
 	 *
 	 * @param sizeHint an guess on how large string will be, in bytes.
-	**/
+	 */
 	private byte[] readWordOrNil(int sizeHint) throws IOException {
 		byte[] ret = readWord(sizeHint);
 		
@@ -609,7 +609,7 @@ public class SyslogParser implements Closeable {
 	 * Read a line (until next ASCII NL or EOF) as a byte array.
 	 *
 	 * @param sizeHint an guess on how large the line will be, in bytes.
-	**/
+	 */
 	private byte[] readLine(int sizeHint) throws IOException {
 		ByteArrayOutputStream ret = new ByteArrayOutputStream(sizeHint);
 		int c;
@@ -626,7 +626,7 @@ public class SyslogParser implements Closeable {
 	 * Read a RFC 3164 tag.
 	 *
 	 * Tags end with left bracket, colon, ASCII CR, or ASCII NL.
-	**/
+	 */
 	private byte[] readTag() throws IOException {
 		ByteArrayOutputStream ret = new ByteArrayOutputStream(16);
 		int c;
@@ -643,7 +643,7 @@ public class SyslogParser implements Closeable {
 	 * Read a RFC 3164 pid.
 	 *
 	 * The format is "[1234]".
-	**/
+	 */
 	private byte[] readPid() throws IOException {
 		ByteArrayOutputStream ret = new ByteArrayOutputStream(8);
 		int c;
@@ -660,7 +660,7 @@ public class SyslogParser implements Closeable {
 	 * Read RFC 5424 structured data.
 	 *
 	 * Just read the structured data, but don't create a map of it.
-	**/
+	 */
 	private byte[] readStructuredData() throws IOException {
 		int c = read(true);
 		

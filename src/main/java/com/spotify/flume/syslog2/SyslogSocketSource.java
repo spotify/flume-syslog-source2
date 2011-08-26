@@ -25,7 +25,7 @@ import com.cloudera.flume.core.Event;
 
 /**
  * A Flume event source backed by a streaming socket and a syslog parser.
-**/
+ */
 public class SyslogSocketSource extends ServerSocketSource {
 	public SyslogSocketSource(SocketAddress addr) {
 		// 1 in backlog. We expect at most one connection anyway.

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * The source will listen for incoming connections and dispatch the sockets to
  * one thread each. A blocking queue is used to collect events from the threads.
-**/
+ */
 public abstract class ServerSocketSource extends BaseSource {
 	static final Logger LOG = LoggerFactory.getLogger(ServerSocketSource.class);
 
@@ -57,7 +57,7 @@ public abstract class ServerSocketSource extends BaseSource {
 	 *
 	 * @param addr the address to bind to and listen for connections on.
 	 * @param backlog the maximum number of outstanding incoming connections.
-	**/
+	 */
 	public ServerSocketSource(SocketAddress addr, int backlog) {
 		this.addr = addr;
 		this.backlog = backlog;
@@ -84,7 +84,7 @@ public abstract class ServerSocketSource extends BaseSource {
 	 * @param addr the address to bind to and listen for connections on.
 	 * @param backlog the maximum number of outstanding incoming connections.
 	 * @return a ServerSocket ready for accept()ing.
-	**/
+	 */
 	protected ServerSocket createServerSocket(SocketAddress addr, int backlog) throws IOException {
 		// For some reason ServerSocket doesn't take a SocketAddress.
 		InetSocketAddress saddr = (InetSocketAddress) addr;
@@ -127,7 +127,7 @@ public abstract class ServerSocketSource extends BaseSource {
 
 	/**
 	 * Schedule a wake up of the next() call.
-	**/
+	 */
 	private void wakeUp() {
 		eventQueue.offer(WAKE_EVENT);
 	}
@@ -136,7 +136,7 @@ public abstract class ServerSocketSource extends BaseSource {
 	 * Process incoming connections on the server socket.
 	 *
 	 * Creates a new Processor per connection and starts it.
-	**/
+	 */
 	private void processServerSocket() {
 		try {
 			for (;;) {
@@ -158,12 +158,12 @@ public abstract class ServerSocketSource extends BaseSource {
 	 * Create a new socket source for the given socket.
 	 *
 	 * The socket is connected and ready to be read from/written to.
-	**/
+	 */
 	protected abstract SocketSource createSocketSource(Socket socket) throws IOException;
 	
 	/**
 	 * One thread per streaming socket.
-	**/
+	 */
 	private class Processor extends Thread {
 		private Socket socket;
 		
@@ -177,7 +177,7 @@ public abstract class ServerSocketSource extends BaseSource {
 		 *
 		 * This stops the processor, closes the socket and frees
 		 * all resources.
-		**/
+		 */
 		public void close() throws IOException, InterruptedException {
 			socket.close();
 			socket = null;
@@ -225,18 +225,18 @@ public abstract class ServerSocketSource extends BaseSource {
 	 * method.
 	 *
 	 * @see com.cloudera.flume.core.EventSource
-	**/
+	 */
 	public static interface SocketSource {
 		/**
 		 * Close the socket and free any resources used by this source.
 		 *
 		 * Calls to any method after close() yields undefined behaviour.
-		**/
+		 */
 		public void close() throws IOException, InterruptedException;
 		
 		/**
 		 * Return the next event, waiting if necessary.
-		**/
+		 */
 		public Event next() throws IOException, InterruptedException;
 		
 		/**
@@ -246,7 +246,7 @@ public abstract class ServerSocketSource extends BaseSource {
 		 * method throws an exception, the socket will be closed.
 		 *
 		 * @return the number of rejected/skipped messages.
-		**/
+		 */
 		public int recover() throws IOException, InterruptedException;
 	}
 }

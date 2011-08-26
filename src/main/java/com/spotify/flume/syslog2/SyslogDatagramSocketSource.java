@@ -30,7 +30,7 @@ import com.cloudera.flume.core.Event;
  * A Flume event source backed by a datagram socket and a syslog parser.
  *
  * Currently a new parser is created for every packet.
-**/
+ */
 public class SyslogDatagramSocketSource extends BaseSource {
 	private SocketAddress addr;
 	private DatagramSocket socket;
@@ -41,7 +41,7 @@ public class SyslogDatagramSocketSource extends BaseSource {
 	 *
 	 * @param addr the address to bind to.
 	 * @param bufferSize the maximum number of bytes per UDP message.
-	**/
+	 */
 	public SyslogDatagramSocketSource(SocketAddress addr, int bufferSize) {
 		this.addr = addr;
 		this.bufferSize = bufferSize;
@@ -54,7 +54,7 @@ public class SyslogDatagramSocketSource extends BaseSource {
 
 	/**
 	 * Create a new datagram socket suitable for receiving packets on.
-	**/
+	 */
 	protected DatagramSocket createDatagramSocket() throws IOException {
 		return new DatagramSocket(addr);
 	}

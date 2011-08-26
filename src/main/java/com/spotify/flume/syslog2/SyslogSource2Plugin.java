@@ -26,14 +26,14 @@ import com.cloudera.util.Pair;
  * A loadable Flume plugin.
  *
  * This is the main entry point of the plugin.
-**/
+ */
 public class SyslogSource2Plugin {
 	/**
 	 * Return a list of available source builders.
 	 *
 	 * This is used by flume.conf.SourceFactoryImpl to instantiate
 	 * source builders.
-	**/
+	 */
 	public static List<Pair<String, SourceBuilder>> getSourceBuilders() {
 		List<Pair<String, SourceBuilder>> ret = new ArrayList<Pair<String, SourceBuilder>>();
 		

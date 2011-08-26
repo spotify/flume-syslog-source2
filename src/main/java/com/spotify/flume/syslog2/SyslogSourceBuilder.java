@@ -40,7 +40,7 @@ import com.cloudera.util.Pair;
  * The host defaults to "localhost" and the port defaults to 514. The
  * buffer size argument (last) is only used for UDP sockets and defines
  * the size of the DatagramPacket buffer.
-**/
+ */
 public class SyslogSourceBuilder extends SourceBuilder {
 	final public static String NAME = "syslog2";
 	final public static String USAGE = NAME + "(tcp|udp[, host[, port[, bufferSize]]])";
