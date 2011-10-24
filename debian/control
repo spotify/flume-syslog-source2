@@ -4,9 +4,22 @@ Priority: extra
 Maintainer: Bjorn Edstrom <bjorn@spotify.com>
 Build-Depends: cdbs, debhelper (>= 5.0.38), sun-java6-jdk, maven2
 Standards-Version: 3.7.2
-XS-Python-Version: >= 2.5
 
 Package: spotify-flume-syslog-source2
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, sun-java6-jre
+Depends: sun-java6-jre
 Description: Improved Syslog source for Flume.
+ This project defines a plugin for Flume containing an improved Syslog
+ source.
+ .
+ It parses RFC 3164 (BSD Syslog) as well as the newer RFC 5424
+ (Syslog.)  The source goes to a greater length to create a Flume
+ event than the built-in version. All fields possible are parsed, and
+ the body is just the body of the message. Even the Tag and PID fields
+ are parsed. This should leave clean and normalized log messages, at
+ the expense of more CPU cycles.
+ .
+ The data is interpreted as ASCII octets where possible. The notable
+ exception is the hostname, which Flume stores as a String, and must
+ thus be decoded.  Where applicable, decoding to Unicode assumes the
+ octet stream is encoded in UTF-8.

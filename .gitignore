@@ -2,5 +2,6 @@
 debian/files
 debian/mvntmp/
 debian/*.debhelper.log
+debian/*.substvars
 debian/spotify-flume-syslog-source2/
 .m2-repository/
