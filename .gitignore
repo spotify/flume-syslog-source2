@@ -1,1 +1,6 @@
 /target
+debian/files
+debian/mvntmp/
+debian/*.debhelper.log
+debian/spotify-flume-syslog-source2/
+.m2-repository/
