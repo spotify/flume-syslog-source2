@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+MVN = mvn -U -e -Dmaven.repo.local=.m2-repository
+
+%:
+	dh $@
+
+build:
+	dh build --until dh_auto_build
+	mkdir -p debian/mvntmp
+	$(MVN) package
+	cp target/syslog-source2-*.jar debian/mvntmp/syslog-source2.jar
+	dh build --remaining
+
+clean:
+	dh clean
+	$(MVN) clean
+	rm -rf debian/mvntmp

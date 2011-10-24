@@ -1,0 +1,5 @@
+spotify-flume-syslog-source2 (1.0.0) unstable; urgency=low
+
+  * Initial debian packaging.
+
+ -- Björn Edström <bjorn@spotify.com>  Mon, 24 Oct 2011 14:00:00 +0200

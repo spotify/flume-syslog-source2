@@ -1,0 +1,12 @@
+Source: spotify-flume-syslog-source2
+Section: non-free/net
+Priority: extra
+Maintainer: Bjorn Edstrom <bjorn@spotify.com>
+Build-Depends: cdbs, debhelper (>= 5.0.38), sun-java6-jdk, maven2
+Standards-Version: 3.7.2
+XS-Python-Version: >= 2.5
+
+Package: spotify-flume-syslog-source2
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, sun-java6-jre
+Description: Improved Syslog source for Flume.
