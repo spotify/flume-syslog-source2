@@ -1,3 +1,10 @@
+spotify-flume-syslog-source2 (1.0.1) unstable; urgency=low
+
+  * Fix unit tests that depends on current year. #1
+  * Symlink debian/changelog to CHANGELOG.
+
+ -- Tommie Gannert <tommie@spotify.net>  Thu, 03 May 2012 17:47:42 +0200
+
 spotify-flume-syslog-source2 (1.0.0) unstable; urgency=low
 
   * Initial debian packaging.
